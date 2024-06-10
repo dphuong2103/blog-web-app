@@ -1,4 +1,3 @@
-
 export type Tag = {
     id: string,
     tagNameEn: string,
@@ -65,4 +64,9 @@ export type PageInfo = {
 export type BlogFilter = {
     tagSlug?: string,
     q?: string,
+}
+
+export type TagWithBlogCount = {
+    tag: Tag,
+    count: number
 }

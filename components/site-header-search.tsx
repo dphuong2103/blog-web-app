@@ -33,13 +33,13 @@ function SiteHeaderSearch({ className }: SiteHeaderSearchProps) {
 
     const classN = useMemo(() => {
         return cn(className, pathName === "/search" ? "hidden" : "hidden md:inline-flex mr-1")
-    }, [pathName]);
+    }, [pathName, className]);
 
     return (
         <div className={classN}>
             <form onSubmit={onSearch}>
                 <div className="flex items-center content-center gap-1">
-                    <Input value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Search by title, content,..."/>
+                    <Input value={searchValue} onChange={e => setSearchValue(e.target.value)} placeholder="Search by title, content,..." />
                     <Button variant="outline" className="p-3">
                         <Search className="w-4 h-4" />
                     </Button>

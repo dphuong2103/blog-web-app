@@ -36,6 +36,7 @@ import {
 import { FieldValues, FieldPath, ControllerProps } from "react-hook-form";
 import { FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import "./style.css";
+
 const PlainTextCodeEditorDescriptor: CodeBlockEditorDescriptor = {
   match: () => true,
   priority: 0,
@@ -88,8 +89,8 @@ function BlogEditor<TFieldValues extends FieldValues = FieldValues,
         <FormItem>
           <FormControl>
             <MDXEditor
-              className="w-full mt-2 min-h-96 border"
-              contentEditableClassName="list-special-abc"
+              className="w-full mt-2 min-h-96 border min"
+              contentEditableClassName="min-h-80"
               onChange={field.onChange}
               markdown={field.value}
               plugins={
@@ -118,15 +119,14 @@ function BlogEditor<TFieldValues extends FieldValues = FieldValues,
                         {' '}
                         <UndoRedo />
                         <BoldItalicUnderlineToggles />
-                        <InsertImage />
                         <CodeToggle />
+                        <ListsToggle />
                         <BlockTypeSelect />
                         <CreateLink />
+                        <InsertImage />
                         <InsertFrontmatter />
                         <InsertTable />
                         <InsertThematicBreak />
-                        <ListsToggle />
-                        <UndoRedo />
                         <ConditionalContents
                           options={[
                             { when: (editor) => editor?.editorType === 'codeblock', contents: () => <ChangeCodeMirrorLanguage /> },

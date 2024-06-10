@@ -1,7 +1,6 @@
-import { getAllTags, sortTagsByCount } from "@/lib/utils";
 import { Metadata } from "next";
-import { posts } from "#site/content";
 import { Tag } from "@/components/tag";
+import { getTagsWithBlogCount } from "@/api/tag";
 
 export const metadata: Metadata = {
   title: "Tags",
@@ -9,9 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default async function TagsPage() {
-  const tags = getAllTags(posts);
-  const sortedTags = sortTagsByCount(tags);
-
+  const tags = await getTagsWithBlogCount();
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">
@@ -21,8 +18,8 @@ export default async function TagsPage() {
       </div>
       <hr className="my-4" />
       <div className="flex flex-wrap gap-2">
-        {sortedTags?.map((tag) => (
-          <Tag tag={tag} count={tags[tag]} key={tag} />
+        {tags?.map((item) => (
+          <Tag tag={item.tag} count={item.count} key={item.count} />
         ))}
       </div>
     </div>

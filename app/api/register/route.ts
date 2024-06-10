@@ -1,16 +1,8 @@
 import { authenticate_api_url } from "@/constants/api";
-import { SignJWT } from "jose";
-import { cookies } from "next/headers";
-import { NextResponse } from "next/server";
-const secretKey = "secret";
-const key = new TextEncoder().encode(secretKey);
-async function encrypt(payload: any) {
-    return await new SignJWT(payload)
-        .setProtectedHeader({ alg: "HS256" })
-        .setIssuedAt()
-        .setExpirationTime("10 sec from now")
-        .sign(key);
-}
+import { expiryDuration } from "@/constants/value";
+import { encrypt } from "@/utils/authenticate";
+import { NextResponse } from 'next/server';
+
 export async function GET() {
     return new Response("hello", {
         status: 200
@@ -25,18 +17,19 @@ export async function POST(req: Request) {
         method: 'POST',
         headers: new Headers({ 'content-type': 'application/json' }),
     });
+
     if (userResponse.status > 300) {
         return new Response(await userResponse.text(), {
             status: userResponse.status
         })
     }
-    const user = { name: "phuong" };
-    const expires = new Date(Date.now() + 10 * 1000);
-    const session = await encrypt({ user, expires });
+    const user = await userResponse.json();
+    const expires = new Date(Date.now() + expiryDuration);
+    const jwt = await encrypt({ user, expires });
 
     const response = NextResponse.json(JSON.stringify(user), {
         status: 201
     })
-    response.cookies.set("Bearer", session, { expires, httpOnly: true });
+    response.cookies.set("Authorization", `Bearer ${jwt}`, { expires, httpOnly: true });
     return response;
 }

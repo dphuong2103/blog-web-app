@@ -1,4 +1,4 @@
-import { blog_api_url } from "@/app/api/blog/route";
+import { blog_api_url } from "@/constants/api";
 import { Blog, BlogFilter, PaginationRequest, PaginationResult } from "@/models/type";
 import axios, { AxiosHeaders, AxiosRequestConfig } from "axios";
 
@@ -10,12 +10,14 @@ export type CreateBlogRequest = {
     tags: string[]
 }
 const config: AxiosRequestConfig = {
+    withCredentials: true,
     headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
     }
 }
 export async function createBlog(request: CreateBlogRequest) {
-    var axiosResponse = await axios.post<Blog>("/api/blog", JSON.stringify(request), config);
+    const url = "/api/proxy?path=blogs";
+    var axiosResponse = await axios.post<Blog>(url, JSON.stringify(request), config);
     return axiosResponse.data;
 }
 
@@ -34,6 +36,10 @@ export async function getBlogsPagination(request: PaginationRequest, filter?: Bl
 export async function getPostBySlug(slug: string) {
     const url = `${blog_api_url}/${slug}`;
     const fetchedRes = await fetch(url, { cache: 'no-store' });
-    const data = await fetchedRes.json() as Blog;
-    return data;
+    const contentType = fetchedRes.headers.get("content-type");
+    if (contentType && contentType.includes('application/json')) {
+        return await fetchedRes.json() as Blog;
+    } else {
+        return null;
+    }
 }

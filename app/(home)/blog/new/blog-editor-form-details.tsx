@@ -4,9 +4,9 @@ import { CreateBlogForm, createBlogFormSchema } from "@/models/createBlogForm";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
-import InputFormField from "@/components/mui/InputFormField";
-import MultiSelectFormField from "@/components/mui/MultiSelectFormField";
-import BlogEditor from "./BlogEditor";
+import InputFormField from "@/components/mui/input-form-field";
+import MultiSelectFormField from "@/components/mui/multi-select-form-field";
+import BlogEditor from "./blog-editor";
 import { Button } from "@/components/ui/button";
 import { Blog, DropdownOption, Tag } from "@/models/type";
 import useMutateData from "@/hooks/useMutateData";
@@ -15,11 +15,11 @@ import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 
-interface BlogEditorFormProps {
+interface BlogEditorFormDetailsProps {
     tags: Tag[]
 }
 
-function BlogEditorForm({ tags }: BlogEditorFormProps) {
+function BlogEditorFormDetails({ tags }: BlogEditorFormDetailsProps) {
     const router = useRouter();
 
     const form = useForm<CreateBlogForm>({
@@ -81,12 +81,14 @@ function BlogEditorForm({ tags }: BlogEditorFormProps) {
                                     className="mr-auto w-full"
                                     placeholder="Tags"
                                 />
+                            </div>
+                            <div>
+
                                 <Button variant={"default"} disabled={isCreatingBlogLoading}>
                                     {isCreatingBlogLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                                     Create
                                 </Button>
                             </div>
-
                             <BlogEditor control={form.control} name="content" />
                         </div>
 
@@ -97,5 +99,5 @@ function BlogEditorForm({ tags }: BlogEditorFormProps) {
     )
 }
 
-export default BlogEditorForm
+export default BlogEditorFormDetails
 

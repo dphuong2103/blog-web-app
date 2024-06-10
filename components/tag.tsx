@@ -16,7 +16,7 @@ export function Tag({ tag, current, count }: TagProps) {
         variant: current ? "default" : "secondary",
         className: "no-underline rounded-md",
       })}
-      href={`/tags/${slug(tag.tagNameEn)}`}
+      href={`/tag/${slug(tag.tagNameEn)}`}
     >
       {tag.tagNameEn} {count ? `(${count})` : null}
     </Link>

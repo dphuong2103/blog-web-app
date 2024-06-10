@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { nonEmptyString } from "./z-custom";
 
 export const registerFormSchema = z.object({
-    email: z.string().min(1, "Required").email("Please input valid email!"),
-    password: z.string().min(1, "Required"),
-    confirmPassword: z.string().min(1, "Required"),
-    firstName: z.string().min(1, "Required"),
+    email: nonEmptyString.email("Please input valid email!"),
+    password: nonEmptyString,
+    confirmPassword: nonEmptyString,
+    firstName: nonEmptyString,
     lastName: z.string()
 }).superRefine(({ password, confirmPassword }, ctx) => {
     if (confirmPassword != password) {

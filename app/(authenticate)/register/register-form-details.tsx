@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import InputFormField from "@/components/mui/InputFormField";
+import InputFormField from "@/components/mui/input-form-field";
 import useMutateData from "@/hooks/useMutateData";
 import { register } from "@/api/authenticate";
 import { toast } from "react-toastify";
@@ -33,14 +33,14 @@ function RegisterFormDetails() {
       return register(data);
     }, []);
 
-  const onRegisterError = useCallback(() => {
+  const onRegisterError = useCallback((error: any) => {
     toast.error(error.response.data);
-    console.log("Error", error);
+    console.error("Error", error);
   }, [])
 
   const onRegisterSuccess = useCallback(() => {
     router.push("/blog")
-  }, [])
+  }, [router])
 
   const { data, sendRequest, isLoading, error } = useMutateData({
     requestHandler: onValidSubmit,

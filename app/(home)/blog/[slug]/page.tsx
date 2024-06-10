@@ -22,15 +22,16 @@ async function getPostFromParams(slug: string) {
 
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostFromParams(params.slug);
-
+  console.log("post: ", post);
   //todo: chec  !post.isPublished
   if (!post) {
     notFound();
   }
+
   return (
     <article className="container py-6 prose dark:prose-invert max-w-3xl mx-auto">
-      <h1 className="mb-2">{post.title}</h1>
-      <div className="flex gap-2 mb-2">
+      <h2 className="mb-2">{post.title}</h2>
+      <div className="flex gap-2 mb-2 flex-wrap">
         {post.tags?.map((tag) => (
           <Tag tag={tag} key={tag.id} />
         ))}
@@ -40,7 +41,7 @@ export default async function PostPage({ params }: PostPageProps) {
       ) : null}
       <hr className="my-4" />
 
-      <Markdown remarkPlugins={[remarkGfm]}
+      <Markdown remarkPlugins={[remarkGfm]} className="whitespace-normal break-words overflow-x-hidden"
         components={{
           table: ({ children }) => <Table>{children}</Table>,
           tr: ({ children }) => <TableRow>{children}</TableRow>,
@@ -50,8 +51,8 @@ export default async function PostPage({ params }: PostPageProps) {
           td: ({ children }) => <TableCell>{children}</TableCell>,
           link: ({ children }) => <Link href={children as string} target="_blank" rel="noreferrer">{children}</Link>
         }} >
-        {post.content
-        }</Markdown>
+        {post.content}
+      </Markdown>
     </article>
   );
 }

@@ -1,11 +1,12 @@
 import { z } from "zod";
+import { nonEmptyString } from "./z-custom";
 
 export const createBlogFormSchema = z.object({
-    title: z.string().min(1, "required"),
-    summary: z.string(),
+    title: nonEmptyString,
+    summary: nonEmptyString,
     isPublished: z.boolean(),
-    tags: z.array(z.string()),
-    content: z.string().min(1, "required")
+    tags: z.array(z.string()).min(2, "You must select atleast 2 tags").max(5, "You must select 5 tags at most"),
+    content: nonEmptyString
 });
 
 export type CreateBlogForm = z.infer<typeof createBlogFormSchema>;

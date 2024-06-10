@@ -1,6 +1,6 @@
 import { Card } from "@/components/ui/card"
 import React from 'react'
-import RegisterForm from "./RegisterFormDetails"
+import RegisterForm from "./register-form-details"
 import Link from "next/link"
 
 function RegisterPage() {

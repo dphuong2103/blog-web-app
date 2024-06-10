@@ -1,12 +1,13 @@
 import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
 import { Metadata, Viewport } from "next";
-import { Providers } from "@/components/providers";
+import { ThemeProviders } from "@/components/theme-providers";
 import { siteConfig } from "@/config/site";
 import "../globals.css"
 import NextTopLoader from "nextjs-toploader";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { cn } from "@/lib/utils";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 export const viewport: Viewport = {
     themeColor: [
@@ -34,11 +35,11 @@ function LoginLayout({ children }: Readonly<{
             >
                 <NextTopLoader />
                 <ToastContainer position="bottom-right" pauseOnFocusLoss={false} className={"text-sm"} pauseOnHover={false}/>
-                <Providers>
+                <ThemeProviders>
                     <div className="relative flex min-h-dvh flex-col bg-background">
                         <main className="flex-1">{children}</main>
                     </div>
-                </Providers>
+                </ThemeProviders>
             </body>
         </html>
     )

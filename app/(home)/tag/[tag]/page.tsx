@@ -3,7 +3,7 @@ import { getAllTags } from "@/api/tag";
 import { PostItem } from "@/components/post-item";
 import { Tag } from "@/components/tag";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { sortTagsByCount } from "@/lib/utils";
+import { sortShownTagsByCount } from "@/utils/sort-tags";
 import { slug } from "github-slugger";
 import { Metadata } from "next";
 
@@ -37,7 +37,7 @@ export default async function TagPage({ params }: TagPageProps) {
   displayPosts.forEach(b => b.tags.forEach(t => {
     tagIds.push(t.id);
   }))
-  const tagsByCount = tags !== undefined ? sortTagsByCount(tagIds, tags) : [];
+  const tagsByCount = tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">

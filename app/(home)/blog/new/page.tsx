@@ -1,5 +1,5 @@
 import React from 'react'
-import BlogEditorForm from "./BlogEditorForm"
+import BlogEditorFormDetails from "./blog-editor-form-details"
 import { getAllTags } from "@/api/tag";
 import { Metadata } from "next";
 
@@ -11,7 +11,7 @@ async function NewBlogPage() {
     const tags = await getAllTags();
     return (
         <div>
-            <BlogEditorForm tags={tags ?? []} />
+            <BlogEditorFormDetails tags={tags ?? []} />
         </div>
     )
 }

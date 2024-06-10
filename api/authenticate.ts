@@ -1,4 +1,4 @@
-import { RegisterRequest, User } from "@/models/type";
+import { LoginRequest, RegisterRequest, User } from "@/models/type";
 import axios, { AxiosRequestConfig } from "axios";
 const config: AxiosRequestConfig = {
     headers: {
@@ -6,13 +6,11 @@ const config: AxiosRequestConfig = {
     }
 }
 export async function register(request: RegisterRequest) {
-    // var response = await fetch("/api/register", {
-    //     body: JSON.stringify(request),
-    //     method: 'POST',
-    //     headers: new Headers({ 'content-type': 'application/json' }),
-    // })
     var axiosRes = await axios.post("/api/register", JSON.stringify(request), config);
-    console.log("axiosRes", axiosRes);
-    // var user = await response.json() as User;
+    return axiosRes.data;
+}
+
+export async function login(request: LoginRequest) {
+    var axiosRes = await axios.post("/api/login", JSON.stringify(request), config);
     return axiosRes.data;
 }

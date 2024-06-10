@@ -1,7 +1,7 @@
 'use client'
 import React, { useCallback } from 'react'
 import { ControllerProps, FieldPath, FieldValues } from "react-hook-form"
-import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "./MultiSelect"
+import { MultiSelector, MultiSelectorContent, MultiSelectorInput, MultiSelectorItem, MultiSelectorList, MultiSelectorTrigger } from "./multi-select"
 import { FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
 
 type NewType<TFieldValues extends FieldValues> = FieldPath<TFieldValues>

@@ -1,19 +1,20 @@
-// const withMDX = require('@next/mdx')()
- 
-/** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   // Configure `pageExtensions` to include MDX files
-//   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
-//   // Optionally, add any other Next.js config below
-// }
- 
-// module.exports = withMDX(nextConfig)
-
 module.exports = {
-    headers: () => [
+  async rewrites() {
+    return [
       {
-        // Create glob to target specific pages you want
-        source: '/blog',
+        source: "/api/blogs:route*",
+        destination: '/api/proxy?path=blogs:route*',
+      },
+      {
+        source: '/test/:path*',
+        destination: '/api/proxy?path=:path*', 
+      },
+    ];
+  },
+  async headers() {
+    return [
+      {
+        source: '/blog:path*',
         headers: [
           {
             key: 'Cache-Control',
@@ -21,5 +22,15 @@ module.exports = {
           },
         ],
       },
-    ],
-  }
+      {
+        source: '/',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store',
+          },
+        ],
+      },
+    ];
+  },
+};

@@ -1,11 +1,11 @@
 import React from 'react'
-import SearchBox from "./SearchBox"
+import SearchBox from "./search-box"
 import { getBlogsPagination } from "@/api/blog";
 import { getAllTags } from "@/api/tag";
-import { sortTagsByCount } from "@/lib/utils";
 import { PostItem } from "@/components/post-item";
 import { Blog } from "@/models/type";
 import { QueryPagination } from "@/components/query-pagination";
+import { sortShownTagsByCount } from "@/utils/sort-tags";
 
 interface SearchPageParams {
     searchParams: {
@@ -34,8 +34,7 @@ async function SearchPage({ searchParams }: SearchPageParams) {
     (data ?? []).forEach(b => b.tags.forEach(t => {
         tagIds.push(t.id);
     }))
-    console.log("data: ", data);
-    const tagsByCount = tags !== undefined ? sortTagsByCount(tagIds, tags) : [];
+    const tagsByCount = tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
 
     return (
         <div className="container max-w-4xl py-6 lg:py-10 flex flex-col">

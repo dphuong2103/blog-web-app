@@ -13,3 +13,7 @@
     align-items: center;
     justify-self: center;
 }
+
+div[role="toolbar"] {
+    flex-wrap: wrap;
+}
