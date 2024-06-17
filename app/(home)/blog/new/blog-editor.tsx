@@ -89,8 +89,8 @@ function BlogEditor<TFieldValues extends FieldValues = FieldValues,
         <FormItem>
           <FormControl>
             <MDXEditor
-              className="w-full mt-2 min-h-96 border min"
-              contentEditableClassName="min-h-80"
+              className="w-full mt-2 min-h-96"
+              contentEditableClassName="min-h-80 list-special !text-secondary-foreground"
               onChange={field.onChange}
               markdown={field.value}
               plugins={

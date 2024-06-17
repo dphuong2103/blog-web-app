@@ -13,7 +13,8 @@ import useMutateData from "@/hooks/useMutateData";
 import { createBlog } from "@/api/blog";
 import { toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { RadioGroupFormField, RadioOption } from "@/components/mui/radio-group-form-field";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 interface BlogEditorFormDetailsProps {
     tags: Tag[]
@@ -26,7 +27,7 @@ function BlogEditorFormDetails({ tags }: BlogEditorFormDetailsProps) {
         resolver: zodResolver(createBlogFormSchema),
         defaultValues: {
             content: "",
-            isPublished: false,
+            isPublished: "false",
             summary: "",
             tags: [],
             title: ""
@@ -44,8 +45,18 @@ function BlogEditorFormDetails({ tags }: BlogEditorFormDetailsProps) {
         toast.error("Create blog failed, please try again later!");
     }, [])
 
+    const handleCreateBlog = useCallback((data: CreateBlogForm) => {
+        return createBlog({
+            title: data.title,
+            content: data.content,
+            isPublished: data.isPublished === "true",
+            summary: data.summary,
+            tags: data.tags
+        })
+    }, [])
+
     const { data, sendRequest, isLoading: isCreatingBlogLoading, error } = useMutateData({
-        requestHandler: createBlog,
+        requestHandler: handleCreateBlog,
         onSuccess: onCreateBlogSuccess,
         onError: onCreateBlogError
     });
@@ -57,11 +68,24 @@ function BlogEditorFormDetails({ tags }: BlogEditorFormDetailsProps) {
         }))
     }, [tags])
 
+    const publishOptions = useMemo<RadioOption[]>(() => {
+        return [
+            {
+                value: "true",
+                label: "Publish"
+            },
+            {
+                value: "false",
+                label: "Save as draft"
+            }
+        ]
+    }, []);
+    const formId = "creat-blog-form"
     return (
         <div className="px-4 md:max-lg:px-10 mt-10">
             <div className="border-border border-b">
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(sendRequest)}>
+                    <form onSubmit={form.handleSubmit(sendRequest)} id={formId}>
                         <div className="flex flex-col gap-1">
                             <InputFormField
                                 control={form.control}
@@ -81,13 +105,23 @@ function BlogEditorFormDetails({ tags }: BlogEditorFormDetailsProps) {
                                     className="mr-auto w-full"
                                     placeholder="Tags"
                                 />
-                            </div>
-                            <div>
-
-                                <Button variant={"default"} disabled={isCreatingBlogLoading}>
-                                    {isCreatingBlogLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                                    Create
-                                </Button>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="secondary" type="button">
+                                            Publish
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent className="flex flex-col gap-3">
+                                        <DropdownMenuLabel>Select your publish option</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <RadioGroupFormField
+                                            control={form.control}
+                                            name="isPublished"
+                                            options={publishOptions}
+                                        />
+                                        <Button type="submit" form={formId}>Save</Button>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </div>
                             <BlogEditor control={form.control} name="content" />
                         </div>

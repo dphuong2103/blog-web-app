@@ -9,6 +9,7 @@ import SiteHeaderSearch from "./site-header-search";
 import SiteHeaderAvatar from "./site-header-avatar";
 import { getSession } from "@/utils/authenticate";
 import { User } from "@/models/type";
+import { Pencil } from "lucide-react";
 
 export async function SiteHeader() {
   const session = await getSession();
@@ -20,22 +21,6 @@ export async function SiteHeader() {
         <div className="flex flex-1 items-center justify-end space-x-2">
           <nav className="flex-1 flex items-center justify-end gap-2 md:max-xl:gap-0">
             <SiteHeaderSearch />
-            {/* 
-            <Link
-              href={"/search"}
-            >
-              <div
-                className={cn(
-                  buttonVariants({ variant: "ghost" }),
-                  "w-10 px-0 hidden sm:flex"
-                )}
-              >
-                <Icons.search className="h-4 w-4" />
-                <span className="sr-only">Search</span>
-              </div>
-
-            </Link> */}
-
             {
               user && <Link
                 href={"/blog/new"}
@@ -44,10 +29,10 @@ export async function SiteHeader() {
                 <div
                   className={cn(
                     buttonVariants({ variant: "ghost" }),
-                    "w-10 px-0 hidden md:inline-flex"
+                    "w-10 px-0 hidden md:inline-flex text-secondary-foreground"
                   )}
                 >
-                  <Icons.pencil className="h-4 w-4" />
+                  <Pencil className="h-4 w-4"/>
                   <span className="sr-only">New Blog</span>
                 </div>
               </Link>
