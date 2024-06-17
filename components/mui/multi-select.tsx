@@ -25,7 +25,7 @@ type MultiSelectorProps = {
   values: string[];
   onValuesChange: (value: string[]) => void;
   loop?: boolean;
-  options: DropdownOption[],
+  options: DropdownOption[];
 } & React.ComponentPropsWithoutRef<typeof CommandPrimitive>;
 
 interface MultiSelectContextProps {
@@ -37,7 +37,7 @@ interface MultiSelectContextProps {
   setInputValue: React.Dispatch<React.SetStateAction<string>>;
   activeIndex: number;
   setActiveIndex: React.Dispatch<React.SetStateAction<number>>;
-  options: DropdownOption[]
+  options: DropdownOption[];
 }
 
 const MultiSelectContext = createContext<MultiSelectContextProps | null>(null);
@@ -72,9 +72,8 @@ const MultiSelector = ({
         onValueChange([...value, val]);
       }
     },
-    [value, onValueChange]
+    [value, onValueChange],
   );
-
 
   // TODO : change from else if use to switch case statement
 
@@ -83,7 +82,7 @@ const MultiSelector = ({
       const moveNext = () => {
         const nextIndex = activeIndex + 1;
         setActiveIndex(
-          nextIndex > value.length - 1 ? (loop ? 0 : -1) : nextIndex
+          nextIndex > value.length - 1 ? (loop ? 0 : -1) : nextIndex,
         );
       };
 
@@ -100,7 +99,7 @@ const MultiSelector = ({
             setActiveIndex(newIndex);
           } else {
             onValueChange(
-              value.filter((item) => item !== value[value.length - 1])
+              value.filter((item) => item !== value[value.length - 1]),
             );
           }
         }
@@ -126,7 +125,7 @@ const MultiSelector = ({
         }
       }
     },
-    [value, inputValue, activeIndex, loop, dir, onValueChange]
+    [value, inputValue, activeIndex, loop, dir, onValueChange],
   );
 
   return (
@@ -140,14 +139,14 @@ const MultiSelector = ({
         setInputValue,
         activeIndex,
         setActiveIndex,
-        options
+        options,
       }}
     >
       <Command
         onKeyDown={handleKeyDown}
         className={cn(
           "overflow-visible bg-transparent flex flex-col",
-          className
+          className,
         )}
         dir={dir}
         {...props}
@@ -174,7 +173,7 @@ const MultiSelectorTrigger = forwardRef<
       ref={ref}
       className={cn(
         "flex flex-wrap gap-1 p-1 py-2 border border-muted rounded-lg bg-background",
-        className
+        className,
       )}
       {...props}
     >
@@ -183,11 +182,13 @@ const MultiSelectorTrigger = forwardRef<
           key={item}
           className={cn(
             "px-1 rounded-xl flex items-center gap-1",
-            activeIndex === index && "ring-2 ring-muted-foreground "
+            activeIndex === index && "ring-2 ring-muted-foreground ",
           )}
           variant={"secondary"}
         >
-          <span className="text-xs">{options.find(o => o.value === item)?.label ?? "-"}</span>
+          <span className="text-xs">
+            {options.find((o) => o.value === item)?.label ?? "-"}
+          </span>
           <button
             aria-label={`Remove ${item} option`}
             aria-roledescription="button to remove option"
@@ -225,7 +226,7 @@ const MultiSelectorInput = forwardRef<
       className={cn(
         "ml-2 bg-transparent outline-none placeholder:text-muted-foreground flex-1",
         className,
-        activeIndex !== -1 && "caret-transparent"
+        activeIndex !== -1 && "caret-transparent",
       )}
     />
   );
@@ -256,7 +257,7 @@ const MultiSelectorList = forwardRef<
       ref={ref}
       className={cn(
         "p-2 flex flex-col gap-2 rounded-md scrollbar-thin scrollbar-track-transparent transition-colors scrollbar-thumb-muted-foreground dark:scrollbar-thumb-muted scrollbar-thumb-rounded-lg w-full absolute bg-background shadow-md z-10 border border-muted top-0",
-        className
+        className,
       )}
     >
       {children}
@@ -295,7 +296,7 @@ const MultiSelectorItem = forwardRef<
         "rounded-md cursor-pointer px-2 py-1 transition-colors flex justify-between ",
         className,
         isIncluded && "opacity-50 cursor-default",
-        props.disabled && "opacity-50 cursor-not-allowed"
+        props.disabled && "opacity-50 cursor-not-allowed",
       )}
       onMouseDown={mousePreventDefault}
     >

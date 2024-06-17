@@ -1,7 +1,7 @@
-'use client'
-import { RegisterForm, registerFormSchema } from "@/models/registerForm"
-import React from 'react'
-import { useForm } from "react-hook-form"
+"use client";
+import { RegisterForm, registerFormSchema } from "@/models/registerForm";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Form } from "@/components/ui/form";
 import { useCallback } from "react";
@@ -15,42 +15,42 @@ import { useRouter } from "next/navigation";
 
 function RegisterFormDetails() {
   const router = useRouter();
-  const form = useForm<RegisterForm>(
-    {
-      resolver: zodResolver(registerFormSchema),
-      values: {
-        email: "",
-        password: "",
-        confirmPassword: "",
-        firstName: "",
-        lastName: ""
-      }
-    }
-  )
+  const form = useForm<RegisterForm>({
+    resolver: zodResolver(registerFormSchema),
+    values: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+    },
+  });
 
-  const onValidSubmit = useCallback(
-    async (data: RegisterForm) => {
-      return register(data);
-    }, []);
+  const onValidSubmit = useCallback(async (data: RegisterForm) => {
+    return register(data);
+  }, []);
 
   const onRegisterError = useCallback((error: any) => {
     toast.error(error.response.data);
     console.error("Error", error);
-  }, [])
+  }, []);
 
   const onRegisterSuccess = useCallback(() => {
-    router.push("/blog")
-  }, [router])
+    router.push("/blog");
+  }, [router]);
 
   const { data, sendRequest, isLoading, error } = useMutateData({
     requestHandler: onValidSubmit,
     onError: onRegisterError,
-    onSuccess: onRegisterSuccess
+    onSuccess: onRegisterSuccess,
   });
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(sendRequest)} className="flex flex-col gap-3 md:max-lg:w-">
+      <form
+        onSubmit={form.handleSubmit(sendRequest)}
+        className="flex flex-col gap-3 md:max-lg:w-"
+      >
         <InputFormField
           control={form.control}
           name="email"
@@ -91,7 +91,7 @@ function RegisterFormDetails() {
         </Button>
       </form>
     </Form>
-  )
+  );
 }
 
-export default RegisterFormDetails
+export default RegisterFormDetails;

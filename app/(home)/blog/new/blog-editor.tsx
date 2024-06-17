@@ -1,6 +1,9 @@
-import type { CodeBlockEditorDescriptor, SandpackConfig } from '@mdxeditor/editor';
-import '@mdxeditor/editor/style.css';
-import React, { useCallback } from 'react';
+import type {
+  CodeBlockEditorDescriptor,
+  SandpackConfig,
+} from "@mdxeditor/editor";
+import "@mdxeditor/editor/style.css";
+import React, { useCallback } from "react";
 import {
   headingsPlugin,
   listsPlugin,
@@ -32,54 +35,64 @@ import {
   InsertCodeBlock,
   codeMirrorPlugin,
   sandpackPlugin,
-} from '@mdxeditor/editor'
+} from "@mdxeditor/editor";
 import { FieldValues, FieldPath, ControllerProps } from "react-hook-form";
-import { FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import "./style.css";
 
 const PlainTextCodeEditorDescriptor: CodeBlockEditorDescriptor = {
   match: () => true,
   priority: 0,
   Editor: (props) => {
-    const cb = useCodeBlockEditorContext()
+    const cb = useCodeBlockEditorContext();
     return (
       <div onKeyDown={(e) => e.nativeEvent.stopImmediatePropagation()}>
-        <textarea rows={3} cols={20} defaultValue={props.code} onChange={(e) => cb.setCode(e.target.value)} />
+        <textarea
+          rows={3}
+          cols={20}
+          defaultValue={props.code}
+          onChange={(e) => cb.setCode(e.target.value)}
+        />
       </div>
-    )
-  }
-}
+    );
+  },
+};
 
 const simpleSandpackConfig: SandpackConfig = {
-  defaultPreset: 'react',
+  defaultPreset: "react",
   presets: [
     {
-      label: 'React',
-      name: 'react',
-      meta: 'live react',
-      sandpackTemplate: 'react',
-      sandpackTheme: 'light',
-      snippetFileName: '/App.js',
-      snippetLanguage: 'jsx',
+      label: "React",
+      name: "react",
+      meta: "live react",
+      sandpackTemplate: "react",
+      sandpackTheme: "light",
+      snippetFileName: "/App.js",
+      snippetLanguage: "jsx",
     },
-  ]
-}
+  ],
+};
 
 interface BlogEditorProps<
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 > extends Omit<ControllerProps<TFieldValues, TName>, "render"> {
-  label?: string,
-  placeholder?: string,
+  label?: string;
+  placeholder?: string;
 }
 
-
-function BlogEditor<TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>({ control, name }: BlogEditorProps<TFieldValues, TName>) {
-  const onImageUpload = useCallback(
-    async (image: File) => {
-      return "https://picsum.photos/200/300"
-    }, [])
+function BlogEditor<
+  TFieldValues extends FieldValues = FieldValues,
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
+>({ control, name }: BlogEditorProps<TFieldValues, TName>) {
+  const onImageUpload = useCallback(async (image: File) => {
+    return "https://picsum.photos/200/300";
+  }, []);
 
   return (
     <FormField
@@ -93,63 +106,70 @@ function BlogEditor<TFieldValues extends FieldValues = FieldValues,
               contentEditableClassName="min-h-80 list-special !text-secondary-foreground"
               onChange={field.onChange}
               markdown={field.value}
-              plugins={
-                [
-                  codeBlockPlugin({ codeBlockEditorDescriptors: [PlainTextCodeEditorDescriptor] }),
-                  headingsPlugin(),
-                  listsPlugin(),
-                  linkPlugin(),
-                  quotePlugin(),
-                  markdownShortcutPlugin(),
-                  diffSourcePlugin(),
-                  linkDialogPlugin(),
-                  diffSourcePlugin(),
-                  frontmatterPlugin(),
-                  imagePlugin({
-                    imageUploadHandler: onImageUpload,
-                  }),
-                  tablePlugin(),
-                  thematicBreakPlugin(),
-                  codeBlockPlugin({ defaultCodeBlockLanguage: 'js' }),
-                  sandpackPlugin({ sandpackConfig: simpleSandpackConfig }),
-                  codeMirrorPlugin({ codeBlockLanguages: { js: 'JavaScript', css: 'CSS', } }),
-                  toolbarPlugin({
-                    toolbarContents: () => (
-                      <>
-                        {' '}
-                        <UndoRedo />
-                        <BoldItalicUnderlineToggles />
-                        <CodeToggle />
-                        <ListsToggle />
-                        <BlockTypeSelect />
-                        <CreateLink />
-                        <InsertImage />
-                        <InsertFrontmatter />
-                        <InsertTable />
-                        <InsertThematicBreak />
-                        <ConditionalContents
-                          options={[
-                            { when: (editor) => editor?.editorType === 'codeblock', contents: () => <ChangeCodeMirrorLanguage /> },
-                            {
-                              fallback: () => (<>
+              plugins={[
+                codeBlockPlugin({
+                  codeBlockEditorDescriptors: [PlainTextCodeEditorDescriptor],
+                }),
+                headingsPlugin(),
+                listsPlugin(),
+                linkPlugin(),
+                quotePlugin(),
+                markdownShortcutPlugin(),
+                diffSourcePlugin(),
+                linkDialogPlugin(),
+                diffSourcePlugin(),
+                frontmatterPlugin(),
+                imagePlugin({
+                  imageUploadHandler: onImageUpload,
+                }),
+                tablePlugin(),
+                thematicBreakPlugin(),
+                codeBlockPlugin({ defaultCodeBlockLanguage: "js" }),
+                sandpackPlugin({ sandpackConfig: simpleSandpackConfig }),
+                codeMirrorPlugin({
+                  codeBlockLanguages: { js: "JavaScript", css: "CSS" },
+                }),
+                toolbarPlugin({
+                  toolbarContents: () => (
+                    <>
+                      {" "}
+                      <UndoRedo />
+                      <BoldItalicUnderlineToggles />
+                      <CodeToggle />
+                      <ListsToggle />
+                      <BlockTypeSelect />
+                      <CreateLink />
+                      <InsertImage />
+                      <InsertFrontmatter />
+                      <InsertTable />
+                      <InsertThematicBreak />
+                      <ConditionalContents
+                        options={[
+                          {
+                            when: (editor) =>
+                              editor?.editorType === "codeblock",
+                            contents: () => <ChangeCodeMirrorLanguage />,
+                          },
+                          {
+                            fallback: () => (
+                              <>
                                 <InsertCodeBlock />
-                              </>)
-                            }
-                          ]}
-                        />
-                      </>
-                    )
-                  }),
-                ]} />
+                              </>
+                            ),
+                          },
+                        ]}
+                      />
+                    </>
+                  ),
+                }),
+              ]}
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
       )}
     />
-  )
+  );
 }
 
-
-export default BlogEditor
-
-
+export default BlogEditor;

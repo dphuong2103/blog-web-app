@@ -11,7 +11,7 @@ import { siteConfig } from "@/config/site";
 import { User } from "@/models/type";
 
 interface MobileNavProps {
-  user?: User | null
+  user?: User | null;
 }
 export function MobileNav({ user }: MobileNavProps) {
   const [open, setOpen] = useState(false);
@@ -37,11 +37,11 @@ export function MobileNav({ user }: MobileNavProps) {
           <MobileLink onOpenChange={setOpen} href="/blog">
             Blog
           </MobileLink>
-          {
-            user && <MobileLink onOpenChange={setOpen} href={"/blog/new"}>
+          {user && (
+            <MobileLink onOpenChange={setOpen} href={"/blog/new"}>
               New Blog
             </MobileLink>
-          }
+          )}
           <MobileLink onOpenChange={setOpen} href="/tag">
             Tag
           </MobileLink>
@@ -52,10 +52,7 @@ export function MobileNav({ user }: MobileNavProps) {
             About
           </MobileLink>
 
-          {!user && <MobileLink href="/login">
-            Login / Sign Up
-          </MobileLink>}
-
+          {!user && <MobileLink href="/login">Login / Sign Up</MobileLink>}
         </div>
       </SheetContent>
     </Sheet>

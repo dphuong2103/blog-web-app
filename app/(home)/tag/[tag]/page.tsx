@@ -28,16 +28,22 @@ export default async function TagPage({ params }: TagPageProps) {
   const { tag } = params;
   const title = tag.split("-").join(" ");
 
-  const { data: displayPosts, pageInfo } = await getBlogsPagination({ page: params.page }, {
-    tagSlug: params.tag
-  });
+  const { data: displayPosts, pageInfo } = await getBlogsPagination(
+    { page: params.page },
+    {
+      tagSlug: params.tag,
+    },
+  );
 
   const tags = await getAllTags();
   const tagIds: string[] = [];
-  displayPosts.forEach(b => b.tags.forEach(t => {
-    tagIds.push(t.id);
-  }))
-  const tagsByCount = tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
+  displayPosts.forEach((b) =>
+    b.tags.forEach((t) => {
+      tagIds.push(t.id);
+    }),
+  );
+  const tagsByCount =
+    tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
 
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
@@ -78,7 +84,12 @@ export default async function TagPage({ params }: TagPageProps) {
           </CardHeader>
           <CardContent className="flex flex-wrap gap-2">
             {tagsByCount?.map((t) => (
-              <Tag tag={t.tag} key={t.tag.id} count={t.count} current={slug(t.tag.id) === tag} />
+              <Tag
+                tag={t.tag}
+                key={t.tag.id}
+                count={t.count}
+                current={slug(t.tag.id) === tag}
+              />
             ))}
           </CardContent>
         </Card>

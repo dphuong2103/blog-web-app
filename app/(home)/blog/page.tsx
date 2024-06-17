@@ -19,14 +19,19 @@ interface BlogPageProps {
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const { data, pageInfo } = await getBlogsPagination({ page: searchParams.page })
+  const { data, pageInfo } = await getBlogsPagination({
+    page: searchParams.page,
+  });
   const totalPages = Math.ceil(pageInfo.totalCount / pageInfo.size);
   const tags = await getAllTags();
   const tagIds: string[] = [];
-  data.forEach(b => b.tags.forEach(t => {
-    tagIds.push(t.id);
-  }))
-  const tagsByCount = tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
+  data.forEach((b) =>
+    b.tags.forEach((t) => {
+      tagIds.push(t.id);
+    }),
+  );
+  const tagsByCount =
+    tags !== undefined ? sortShownTagsByCount(tagIds, tags) : [];
   return (
     <div className="container max-w-4xl py-6 lg:py-10">
       <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between md:gap-8">

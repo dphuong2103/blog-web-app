@@ -1,11 +1,9 @@
-import { Card } from "@/components/ui/card"
-import React from 'react'
-import LoginForm from "./login-form-details"
-import Link from "next/link"
+import { Card } from "@/components/ui/card";
+import React from "react";
+import LoginForm from "./login-form-details";
+import Link from "next/link";
 
 function LoginPage() {
-
-
   return (
     <div className="w-screen h-screen flex items-center justify-center">
       <Card className="w-11/12 flex flex-col p-4 max-w-96 gap-4">
@@ -14,12 +12,11 @@ function LoginPage() {
         </h1>
         <LoginForm />
         <div>
-          Don`&apos;`t have an account? <Link href={"/register"}>Sign up</Link>
+          Don&apos;t have an account? <Link href={"/register"}>Sign up</Link>
         </div>
       </Card>
     </div>
-
-  )
+  );
 }
 
-export default LoginPage
+export default LoginPage;

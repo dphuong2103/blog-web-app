@@ -5,7 +5,7 @@ import { siteConfig } from "@/config/site";
 export const runtime = "edge";
 
 const interBold = fetch(
-  new URL("../../../assets/fonts/Inter-Bold.ttf", import.meta.url)
+  new URL("../../../assets/fonts/Inter-Bold.ttf", import.meta.url),
 ).then((res) => res.arrayBuffer());
 
 export async function GET(req: NextRequest) {
@@ -66,7 +66,7 @@ export async function GET(req: NextRequest) {
             weight: 700,
           },
         ],
-      }
+      },
     );
   } catch (error) {
     return new Response("Failed to generate image", { status: 500 });

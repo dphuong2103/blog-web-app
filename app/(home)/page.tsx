@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 import { PostItem } from "@/components/post-item";
 import { getBlogsPagination } from "@/api/blog";
 async function getBlogs() {

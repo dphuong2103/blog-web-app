@@ -5,9 +5,9 @@ import { SiteHeader } from "@/components/site-header";
 import { ThemeProviders } from "@/components/theme-providers";
 import { siteConfig } from "@/config/site";
 import { SiteFooter } from "@/components/site-footer";
-import { ToastContainer } from 'react-toastify';
-import NextTopLoader from 'nextjs-toploader';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+import NextTopLoader from "nextjs-toploader";
+import "react-toastify/dist/ReactToastify.css";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          inter.variable
+          inter.variable,
         )}
       >
         <NextTopLoader shadow={false} showSpinner={false} />

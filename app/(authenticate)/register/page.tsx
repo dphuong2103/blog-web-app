@@ -1,7 +1,7 @@
-import { Card } from "@/components/ui/card"
-import React from 'react'
-import RegisterForm from "./register-form-details"
-import Link from "next/link"
+import { Card } from "@/components/ui/card";
+import React from "react";
+import RegisterForm from "./register-form-details";
+import Link from "next/link";
 
 function RegisterPage() {
   return (
@@ -16,7 +16,7 @@ function RegisterPage() {
         </div>
       </Card>
     </div>
-  )
+  );
 }
 
-export default RegisterPage
+export default RegisterPage;
